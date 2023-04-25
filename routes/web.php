@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use app\Http\Controllers\LibrosController;
+use App\Http\Controllers\VentaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,4 +18,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+/*
+Route::get('/pet', function(){
+    return view('pet.index');
+});
+*/
 
+// Route::get('pet/create', [PetController::class, 'create']);
+// accedemos a la clase PetController, y al metodo create
+
+Route::resource('venta', VentaController::class);

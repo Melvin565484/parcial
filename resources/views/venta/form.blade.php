@@ -1,8 +1,8 @@
-<form>
-    Cantidad:
-    <input type="number" name="cantidad" placeholder="cantidad" >
-    Precio:
-    <input type="number" name="precio" placeholder="precio">
-    fecha venta:
-    <input type="text" name="fecha venta" placeholder="fecha">
-</form>
+cantidad
+<input type="number" name="cantidad" id="cantidad" value="{{ isset($venta)?$venta->cantidad:''}}" /><br/>
+precio
+<input type="number" name="precio" id="precio" value="{{ isset($venta)?$venta->precio:''}}" /><br/>
+fecha
+<input type="date" name="fecha" id="fecha" value="{{ isset($venta)?$venta->fecha:''}}" /><br/>
+
+<button type="submit">Guardar</button>

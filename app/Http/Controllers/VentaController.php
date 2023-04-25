@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Venta;
 
 class VentaController extends Controller
 {
@@ -12,6 +13,8 @@ class VentaController extends Controller
     public function index()
     {
         //
+        $data['ventas'] = Venta::all();
+        return view('venta.index', $data);
     }
 
     /**
@@ -20,6 +23,7 @@ class VentaController extends Controller
     public function create()
     {
         //
+        return view('venta.create');
     }
 
     /**
@@ -27,7 +31,10 @@ class VentaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //recepcionar todos los datos
+        $ventaData = request()->except("_token");
+        Venta::insert($ventaData);
+        return redirect()->route('venta.index');
     }
 
     /**
@@ -43,7 +50,9 @@ class VentaController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        //recuperar los datos
+        $venta=Venta::findOrFail($id);
+        return view('venta.edit', compact('venta'));
     }
 
     /**
@@ -52,6 +61,9 @@ class VentaController extends Controller
     public function update(Request $request, string $id)
     {
         //
+        $ventaData=request()->except(['_token', '_method']);
+        Venta::where('id', '=', $id)->update($ventaData);
+        return redirect('venta');
     }
 
     /**
@@ -60,5 +72,7 @@ class VentaController extends Controller
     public function destroy(string $id)
     {
         //
+        Venta::destroy($id);
+        return redirect('venta');
     }
 }
