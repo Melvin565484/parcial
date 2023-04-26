@@ -3,6 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Libros;
+
+/*si hay algun error en todo lo que se refiere a libros me hago reponsable
+ya que el servidor no me corria y por lo tanto no pude verificar funcionalidad intente todo y aun asi no pude
+Att:Luis Blanco*/
 
 class LibrosController extends Controller
 {
@@ -12,6 +17,8 @@ class LibrosController extends Controller
     public function index()
     {
         //
+        $data['libros'] = Libros::all();
+        return view('libros.index', $data);
     }
 
     /**
@@ -20,6 +27,8 @@ class LibrosController extends Controller
     public function create()
     {
         //
+        return view ('libros.create', $data);
+
     }
 
     /**
@@ -28,6 +37,9 @@ class LibrosController extends Controller
     public function store(Request $request)
     {
         //
+        $libroData = request()->except("_token");
+        Libros::insert($libroData);
+        return redirect()->route('libros.index');
     }
 
     /**
@@ -44,6 +56,8 @@ class LibrosController extends Controller
     public function edit(string $id)
     {
         //
+        $libros=Libros::findOrFail($id);
+        return view('libros.edit', compact('libros'));
     }
 
     /**
@@ -52,6 +66,9 @@ class LibrosController extends Controller
     public function update(Request $request, string $id)
     {
         //
+        $libroData=request()->except(['_token', '_method']);
+        Libros::where('id', '=', $id)->update($libroData);
+        return redirect('libros');
     }
 
     /**
@@ -60,5 +77,7 @@ class LibrosController extends Controller
     public function destroy(string $id)
     {
         //
+        Libros::destroy($id);
+        return redirect('libros');
     }
 }
